@@ -1,4 +1,4 @@
-use image::{RgbImage, Rgb};
+use image::{Rgb, RgbImage};
 use indicatif::ProgressBar;
 
 fn main() -> Result<(), image::error::ImageError> {
@@ -10,16 +10,14 @@ fn main() -> Result<(), image::error::ImageError> {
     for j in 0..image_height {
         pb.set_position(j as u64);
         for i in 0..image_width {
-            let r = i as f64 / ((image_width-1) as f64);
-            let g = j as f64 / ((image_height-1) as f64);
+            let r = i as f64 / ((image_width - 1) as f64);
+            let g = j as f64 / ((image_height - 1) as f64);
             let b = 0.25;
 
-
-            let pixel = Rgb([ (256.0 * r) as u8, (256.0 * g) as u8, (256.0 * b) as u8]);
+            let pixel = Rgb([(256.0 * r) as u8, (256.0 * g) as u8, (256.0 * b) as u8]);
             img.put_pixel(j, i, pixel);
         }
     }
     pb.finish_and_clear();
-    img.save("image.png")?;
-    Ok(())
+    img.save("image.png")
 }
