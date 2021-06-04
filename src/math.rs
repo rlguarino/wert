@@ -1,7 +1,6 @@
-
 use std::ops;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Vec3 {
     pub x: f64,
     pub y: f64,
@@ -14,6 +13,23 @@ impl Vec3 {
     }
     pub fn squared_length(&self) -> f64 {
         self.x * self.x + self.y * self.y + self.z * self.z
+    }
+    pub fn unit_vector(&self) -> Vec3 {
+        self / self.length()
+    }
+}
+
+impl ops::Div<&f64> for &Vec3 {
+    type Output = Vec3;
+    fn div(self, _rhs: &f64) -> Vec3 {
+        (1.0 / _rhs) * self
+    }
+}
+
+impl ops::Div<f64> for &Vec3 {
+    type Output = Vec3;
+    fn div(self, _rhs: f64) -> Vec3 {
+        self / &_rhs
     }
 }
 
@@ -28,6 +44,20 @@ impl ops::Add<&Vec3> for &Vec3 {
     }
 }
 
+impl ops::Add<Vec3> for &Vec3 {
+    type Output = Vec3;
+    fn add(self, _rhs: Vec3) -> Vec3 {
+        self + &_rhs
+    }
+}
+
+impl ops::Add<Vec3> for Vec3 {
+    type Output = Vec3;
+    fn add(self, _rhs: Vec3) -> Vec3 {
+        &self + &_rhs
+    }
+}
+
 impl ops::Sub<&Vec3> for &Vec3 {
     type Output = Vec3;
     fn sub(self, _rhs: &Vec3) -> Vec3 {
@@ -36,6 +66,20 @@ impl ops::Sub<&Vec3> for &Vec3 {
             y: self.y - _rhs.y,
             z: self.z - _rhs.z,
         }
+    }
+}
+
+impl ops::Sub<Vec3> for &Vec3 {
+    type Output = Vec3;
+    fn sub(self, _rhs: Vec3) -> Vec3 {
+        self - &_rhs
+    }
+}
+
+impl ops::Sub<Vec3> for Vec3 {
+    type Output = Vec3;
+    fn sub(self, _rhs: Vec3) -> Vec3 {
+        &self - &_rhs
     }
 }
 
@@ -49,6 +93,7 @@ impl ops::Mul<&Vec3> for &Vec3 {
         }
     }
 }
+
 impl ops::Mul<&f64> for &Vec3 {
     type Output = Vec3;
     fn mul(self, _rhs: &f64) -> Vec3 {
@@ -57,6 +102,20 @@ impl ops::Mul<&f64> for &Vec3 {
             y: self.y * _rhs,
             z: self.z * _rhs,
         }
+    }
+}
+
+impl ops::Mul<&Vec3> for &f64 {
+    type Output = Vec3;
+    fn mul(self, _rhs: &Vec3) -> Vec3 {
+        _rhs * self
+    }
+}
+
+impl ops::Mul<&Vec3> for f64 {
+    type Output = Vec3;
+    fn mul(self, _rhs: &Vec3) -> Vec3 {
+        &self * _rhs
     }
 }
 
