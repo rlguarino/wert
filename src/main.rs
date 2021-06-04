@@ -1,5 +1,9 @@
+mod math;
+mod ray;
+
 use image::{Rgb, RgbImage};
 use indicatif::ProgressBar;
+use std::f64;
 
 fn main() -> Result<(), image::error::ImageError> {
     let image_width = 256;
